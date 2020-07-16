@@ -99,8 +99,8 @@ export default {
       this.panTo(this.selectPost[0]);
     },
     addMapMarker(x, y, post) {
-      console.log(post);
-      L.marker([y, x]).addTo(this.osmMap).bindPopup(`<h2 class="item__title">${post.storeNm}</h2>
+      L.marker([y, x]).addTo(this.osmMap).bindPopup(`
+            <h2 class="item__title">${post.storeNm}</h2>
             <a href="https://www.google.com.tw/maps/place/${post.addr}" target="_blank" class="popup__text">${post.addr}</a>
             <p class="popup__text">${post.tel}</p>
             <p class="popup__text">${post.busiTime}</p>
@@ -118,16 +118,15 @@ export default {
     },
     panTo(post) {
       this.osmMap.panTo(new L.LatLng(post.latitude, post.longitude));
-      L.marker([post.latitude, post.longitude]).addTo(this.osmMap).bindPopup(
-        `<h2 class="popup__title">${post.storeNm}</h2>
+      L.marker([post.latitude, post.longitude]).addTo(this.osmMap).bindPopup(`
+            <h2 class="popup__title">${post.storeNm}</h2>
             <a href="https://www.google.com.tw/maps/place/${post.addr}" target="_blank" class="popup__text">${post.addr}</a>
             <p class="popup__text">${post.tel}</p>
             <p class="popup__text">${post.busiTime}</p>
             <div class="popup__total ${post.total > 0 ? 'popup__total--inStock' : 'popup__total--empty'}">
               <p class="total__text">數量</p>
               <p class="total__text">${post.total}</p>
-            </div>`,
-      ).openPopup();
+            </div>`).openPopup();
     },
   },
 };
