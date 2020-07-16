@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="treble">
-      <div class="treble__sidebar">
+      <div class="treble__sidebar" :class="isShowSidebar ? 'active' : ''">
         <h1 class="sidebar__title">三倍券地圖</h1>
         <div class="sidebar__select">
           <el-select class="select__item" v-model="select.city" placeholder="請選擇縣市"
@@ -17,21 +17,24 @@
         </div>
         <div class="sidebar__list">
           <div class="list__item" v-for="post in selectPost" :key="post.storeCd"
-          @click="panTo(post)">
+          @click="switchSidebar();panTo(post)">
             <h2 class="item__title">{{ post.storeNm }}</h2>
             <p class="item__text">{{ post.addr }}</p>
             <p class="item__text">{{ post.tel }}</p>
             <p class="item__text" v-html="post.busiTime"></p>
             <div class="item__total"
-            :class="[post.total > 0 ? `item__total--inStock` : `item__total--empty`]">
+            :class="[post.total > 0 ? 'item__total--inStock' : 'item__total--empty']">
               <p class="total__text">數量</p>
               <p class="total__text">{{ post.total }}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="treble__map">
+      <div class="treble__map" @click="switchSidebar()">
         <div id="map"></div>
+      </div>
+      <div class="treble__float" @click="switchSidebar()">
+        <div class="arrow__icon"></div>
       </div>
     </div>
   </div>
@@ -54,6 +57,7 @@ export default {
         city: '',
         area: '',
       },
+      isShowSidebar: false,
     };
   },
   created() {
@@ -127,6 +131,9 @@ export default {
               <p class="total__text">數量</p>
               <p class="total__text">${post.total}</p>
             </div>`).openPopup();
+    },
+    switchSidebar() {
+      this.isShowSidebar = !this.isShowSidebar;
     },
   },
 };
@@ -238,7 +245,57 @@ export default {
       }
     }
   }
-
+}
+@media screen and (max-width: 500px){
+  .treble {
+    display: block;
+    position: relative;
+    .treble__sidebar {
+      position: absolute;
+      top: 0;
+      transform: translateX(-100%);
+      transition: all .3s;
+      width: 80%;
+      z-index: 999;
+      height: 100vh;
+      &.active {
+        transform: translateX(0);
+      }
+    }
+    .treble__map {
+      position: relative;
+      width: 100%;
+      #map {
+        height: 100vh;
+      }
+    }
+    .treble__float {
+      position: absolute;
+      z-index: 990;
+      width: 30px;
+      height: 90px;
+      border-radius: 0 20px 20px 0;
+      background: #FFA573;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .arrow__icon {
+        width: 20px;
+        height: 20px;
+        border-left: 2px solid white;
+        border-bottom: 2px solid white;
+        transform: rotate(225deg) skew(20deg, 20deg);
+      }
+    }
+    .leaflet-control-container {
+      .leaflet-control {
+        display: none;
+      }
+    }
+  }
 }
 
 </style>
