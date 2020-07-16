@@ -1,6 +1,6 @@
 # 三倍券地圖
 
-[![image.png](https://i.postimg.cc/q6q6N6n9/image.png)](https://postimg.cc/q6q6N6n9)
+[![2020-07-16-4-03-50.png](https://i.postimg.cc/nrY4wvLc/2020-07-16-4-03-50.png)](https://postimg.cc/q6q6N6n9)
 
 ## Demo
 
