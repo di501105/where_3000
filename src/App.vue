@@ -17,7 +17,7 @@
         </div>
         <div class="sidebar__list">
           <div class="list__item" v-for="post in selectPost" :key="post.storeCd"
-          @click="switchSidebar();panTo(post)">
+          @click="switchSidebar(); panTo(post);">
             <h2 class="item__title">{{ post.storeNm }}</h2>
             <p class="item__text">{{ post.addr }}</p>
             <p class="item__text">{{ post.tel }}</p>
@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div class="treble__map" @click="switchSidebar()">
+      <div class="treble__map" @click="closeSidebar()">
         <div id="map"></div>
       </div>
       <div class="treble__float" @click="switchSidebar()">
@@ -57,7 +57,7 @@ export default {
         city: '',
         area: '',
       },
-      isShowSidebar: false,
+      isShowSidebar: true,
     };
   },
   created() {
@@ -135,6 +135,9 @@ export default {
     switchSidebar() {
       this.isShowSidebar = !this.isShowSidebar;
     },
+    closeSidebar() {
+      this.isShowSidebar = false;
+    },
   },
 };
 </script>
@@ -144,6 +147,7 @@ export default {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "微軟正黑體", "Microsoft JhengHei", Helvetica, arial, sans-serif
 }
 .treble {
   width: 100%;
@@ -277,8 +281,7 @@ export default {
       border-radius: 0 20px 20px 0;
       background: #FFA573;
       left: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 20%;
       display: flex;
       justify-content: center;
       align-items: center;
