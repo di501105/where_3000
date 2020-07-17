@@ -43,6 +43,7 @@
 <script>
 import L from 'leaflet';
 import cityCountyData from '@/assets/CityCountyData.json';
+import settings from '@/resource/IconMapping.json';
 
 export default {
   name: 'App',
@@ -56,6 +57,12 @@ export default {
       select: {
         city: '',
         area: '',
+      },
+      icons: {
+        grey: this.customIcon('grey'),
+        red: this.customIcon('red'),
+        green: this.customIcon('green'),
+        orange: this.customIcon('orange'),
       },
       isShowSidebar: true,
     };
@@ -103,7 +110,7 @@ export default {
       this.panTo(this.selectPost[0]);
     },
     addMapMarker(x, y, post) {
-      L.marker([y, x]).addTo(this.osmMap).bindPopup(`
+      L.marker([y, x], { icon: post.total > 0 ? this.icons.red : this.icons.grey }).addTo(this.osmMap).bindPopup(`
             <h2 class="item__title">${post.storeNm}</h2>
             <a href="https://www.google.com.tw/maps/place/${post.addr}" target="_blank" class="popup__text">${post.addr}</a>
             <p class="popup__text">${post.tel}</p>
@@ -122,7 +129,7 @@ export default {
     },
     panTo(post) {
       this.osmMap.panTo(new L.LatLng(post.latitude, post.longitude));
-      L.marker([post.latitude, post.longitude]).addTo(this.osmMap).bindPopup(`
+      L.marker([post.latitude, post.longitude], { icon: post.total > 0 ? this.icons.red : this.icons.grey }).addTo(this.osmMap).bindPopup(`
             <h2 class="popup__title">${post.storeNm}</h2>
             <a href="https://www.google.com.tw/maps/place/${post.addr}" target="_blank" class="popup__text">${post.addr}</a>
             <p class="popup__text">${post.tel}</p>
@@ -137,6 +144,12 @@ export default {
     },
     closeSidebar() {
       this.isShowSidebar = false;
+    },
+    customIcon(color) {
+      return L.icon({
+        ...settings.icon,
+        iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+      });
     },
   },
 };
